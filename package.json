@@ -1,6 +1,6 @@
 {
   "name": "@jambonz/tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Pre-built, reusable tools for jambonz pipeline voice AI agents",
   "type": "module",
   "main": "./dist/index.cjs",
