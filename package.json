@@ -37,6 +37,10 @@
     "llm",
     "function-calling"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jambonz/tools"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=22.0.0"
