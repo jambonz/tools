@@ -1,0 +1,1 @@
+- [Package lock must be committed](feedback_package_lock.md) — always run npm install before committing package.json changes
