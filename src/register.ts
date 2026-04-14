@@ -14,7 +14,7 @@ interface ToolCallEvent {
  * session.sendToolOutput(). Unknown tool names are reported as errors.
  *
  * @param session  - A jambonz WebSocket session (or any object with .on() and .sendToolOutput())
- * @param hookPath - The toolHook path used in the pipeline verb (e.g. '/tool-call')
+ * @param hookPath - The toolHook path used in the agent verb (e.g. '/tool-call')
  * @param tools    - Array of JambonzTool instances to register
  * @param options  - Optional configuration
  * @param options.logger - A pino-compatible logger for debug/error output

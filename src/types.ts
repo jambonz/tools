@@ -8,7 +8,7 @@ export interface ToolParameters {
 }
 
 /**
- * The schema definition passed to llmOptions.tools in a jambonz pipeline verb.
+ * The schema definition passed to llmOptions.tools in a jambonz agent verb.
  * Compatible with OpenAI, Anthropic, Google, and Bedrock function-calling formats.
  */
 export interface ToolSchema {
@@ -18,7 +18,7 @@ export interface ToolSchema {
 }
 
 /**
- * A pre-built, reusable tool for jambonz pipeline voice AI agents.
+ * A pre-built, reusable tool for jambonz agent voice AI apps.
  *
  * Each tool bundles:
  * - `schema` — the tool definition the LLM needs to know how to call it
