@@ -1,6 +1,6 @@
 # @jambonz/tools
 
-Pre-built, reusable tools for jambonz pipeline voice AI agents.
+Pre-built, reusable tools for jambonz agent voice AI applications.
 
 Instead of copy-pasting tool schemas and writing API handlers for every application, import a ready-made tool and wire it up in a few lines:
 
@@ -9,7 +9,7 @@ import { createTavilySearch, registerTools } from '@jambonz/tools';
 
 const search = createTavilySearch({ apiKey: 'tvly-xxx' });
 
-session.pipeline({
+session.agent({
   llm: {
     vendor: 'openai',
     model: 'gpt-4.1-mini',
@@ -35,9 +35,9 @@ npm install @jambonz/tools
 
 ## Concepts
 
-### How tools work in jambonz pipeline
+### How tools work in jambonz agent
 
-When you give an LLM tools in a jambonz pipeline, the flow is:
+When you give an LLM tools in a jambonz agent, the flow is:
 
 1. The LLM decides to call a tool and sends a `tool_call` with a name and arguments
 2. The feature-server routes it to your application via the `toolHook` path
@@ -58,7 +58,7 @@ interface JambonzTool {
 ```
 
 You can use these two pieces independently:
-- Pass `tool.schema` to `llmOptions.tools` in your pipeline verb
+- Pass `tool.schema` to `llmOptions.tools` in your agent verb
 - Call `tool.execute(args)` yourself in a custom toolHook handler
 - Or use `registerTools()` to wire everything up automatically
 
@@ -195,14 +195,14 @@ const svc = makeService({ path: '/' });
 svc.on('session:new', (session) => {
   const log = logger.child({ call_sid: session.callSid });
 
-  session.on('/pipeline-complete', () => {
+  session.on('/agent-complete', () => {
     session.hangup().reply();
   });
 
   registerTools(session, '/tool-call', tools, { logger: log });
 
   session
-    .pipeline({
+    .agent({
       stt: { vendor: 'deepgram', language: 'multi' },
       tts: { vendor: 'cartesia', voice: '9626c31c-bec5-4cca-baa8-f8ba9e84c8bc' },
       llm: {
@@ -225,7 +225,7 @@ svc.on('session:new', (session) => {
       toolHook: '/tool-call',
       bargeIn: { enable: true },
       turnDetection: 'krisp',
-      actionHook: '/pipeline-complete',
+      actionHook: '/agent-complete',
     })
     .send();
 });
@@ -245,7 +245,7 @@ const myTool = {
   parameters: { type: 'object', properties: { order_id: { type: 'string' } }, required: ['order_id'] },
 };
 
-session.pipeline({
+session.agent({
   llm: {
     llmOptions: {
       tools: [
@@ -277,11 +277,11 @@ session.on('/tool-call', async (evt) => {
 
 ## Using with dynamic tools
 
-You can inject `@jambonz/tools` tools mid-conversation using `updatePipeline()`:
+You can inject `@jambonz/tools` tools mid-conversation using `updateAgent()`:
 
 ```typescript
 // start without tools, then add them after a few turns
-session.updatePipeline({
+session.updateAgent({
   type: 'update_tools',
   tools: [search.schema, weather.schema],
 });

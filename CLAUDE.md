@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`@jambonz/tools` — a library of pre-built, reusable tools for jambonz pipeline voice AI agents. Each tool is a `{ schema, execute }` pair: the schema tells the LLM what it can call, `execute` handles the API call and returns a text string. The `registerTools()` helper wires tools onto a jambonz WebSocket session automatically.
+`@jambonz/tools` — a library of pre-built, reusable tools for jambonz agent voice AI applications. Each tool is a `{ schema, execute }` pair: the schema tells the LLM what it can call, `execute` handles the API call and returns a text string. The `registerTools()` helper wires tools onto a jambonz WebSocket session automatically.
 
 ## Commands
 
