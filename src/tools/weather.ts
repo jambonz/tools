@@ -1,11 +1,11 @@
-import type { JambonzTool, ToolSchema } from '../types.js';
+import type { JambonzTool, ToolMeta, ToolSchema } from '../types.js';
 
 export interface WeatherOptions {
   /** Temperature scale (default: 'celsius') */
   scale?: 'celsius' | 'fahrenheit';
 }
 
-const schema: ToolSchema = {
+export const schema: ToolSchema = {
   name: 'get_weather',
   description: 'Get the current temperature, wind speed, and conditions for a given location.',
   parameters: {
@@ -19,6 +19,8 @@ const schema: ToolSchema = {
     required: ['location'],
   },
 };
+
+export const meta: ToolMeta = { factory: 'createWeather', requiresApiKey: false };
 
 /**
  * Create a weather lookup tool using the free Open-Meteo API.

@@ -1,8 +1,11 @@
 /* Core types */
-export type { JambonzTool, ToolSchema, ToolParameters, SessionLike } from './types.js';
+export type { JambonzTool, ToolSchema, ToolParameters, SessionLike, ToolInfo, ToolMeta } from './types.js';
 
 /* Registration helper */
 export { registerTools } from './register.js';
+
+/* Tool discovery — enumerate the pre-built tools this version offers */
+export { listTools, toolCatalog } from './catalog.generated.js';
 
 /* Tool factories */
 export { createTavilySearch } from './tools/tavily-search.js';

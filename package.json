@@ -22,7 +22,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "gen:catalog": "node scripts/generate-catalog.mjs",
+    "build": "npm run gen:catalog && tsup",
     "lint": "eslint src/",
     "lint:fix": "eslint --fix src/",
     "prepublishOnly": "npm run build",

@@ -1,11 +1,11 @@
-import type { JambonzTool, ToolSchema } from '../types.js';
+import type { JambonzTool, ToolMeta, ToolSchema } from '../types.js';
 
 export interface DateTimeOptions {
   /** Default timezone when none is specified (default: 'UTC') */
   defaultTimezone?: string;
 }
 
-const schema: ToolSchema = {
+export const schema: ToolSchema = {
   name: 'get_datetime',
   description: 'Get the current date and time, optionally for a specific timezone. '
     + 'Useful for answering "what time is it?" or "what is the date in Tokyo?"',
@@ -22,6 +22,8 @@ const schema: ToolSchema = {
     required: [],
   },
 };
+
+export const meta: ToolMeta = { factory: 'createDateTime', requiresApiKey: false };
 
 /**
  * Create a date/time tool using the built-in Intl API.

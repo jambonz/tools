@@ -18,6 +18,39 @@ export interface ToolSchema {
 }
 
 /**
+ * Discovery metadata for a pre-built tool, describing it without having to
+ * instantiate it (no API key required). Returned by `listTools()` so consumers
+ * — IDEs, docs generators, AI coding agents — can enumerate what this version
+ * of the package offers and how to use each tool.
+ *
+ * `name`, `description`, and `parameters` are derived from the tool's `schema`,
+ * so they cannot drift from what the LLM actually sees.
+ */
+export interface ToolInfo {
+  /** The tool name the LLM calls (matches the tool's `schema.name`). */
+  name: string;
+  /** What the tool does (matches the tool's `schema.description`). */
+  description: string;
+  /** The named factory export to import and call, e.g. `'createWikipedia'`. */
+  factory: string;
+  /** Whether the factory requires an API key in its options. */
+  requiresApiKey: boolean;
+  /** The JSON-schema parameters block the LLM fills in (the tool's `schema.parameters`). */
+  parameters: ToolParameters;
+}
+
+/**
+ * Per-tool metadata that cannot be derived from the schema. Each tool module
+ * exports a `meta` of this shape; the generated catalog collects them.
+ */
+export interface ToolMeta {
+  /** The named factory export to import and call, e.g. `'createWikipedia'`. */
+  factory: string;
+  /** Whether the factory requires an API key in its options. */
+  requiresApiKey: boolean;
+}
+
+/**
  * A pre-built, reusable tool for jambonz agent voice AI apps.
  *
  * Each tool bundles:

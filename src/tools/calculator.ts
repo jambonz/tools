@@ -1,6 +1,6 @@
-import type { JambonzTool, ToolSchema } from '../types.js';
+import type { JambonzTool, ToolMeta, ToolSchema } from '../types.js';
 
-const schema: ToolSchema = {
+export const schema: ToolSchema = {
   name: 'calculator',
   description: 'Evaluate a mathematical expression and return the numeric result. '
     + 'Supports arithmetic (+, -, *, /, ^, %), parentheses, and functions '
@@ -17,6 +17,8 @@ const schema: ToolSchema = {
     required: ['expression'],
   },
 };
+
+export const meta: ToolMeta = { factory: 'createCalculator', requiresApiKey: false };
 
 /**
  * Create a safe math calculator tool.

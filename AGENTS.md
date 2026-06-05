@@ -15,7 +15,9 @@ This file provides guidance to AI coding agents working with code in this reposi
 
 ## Pre-commit hook
 
-Husky runs `lint-staged` on commit, which runs `eslint --max-warnings 0` on staged `.ts` files.
+Husky runs (in `.husky/pre-commit`): `npm run gen:catalog` (regenerates the tool
+catalog and stages it), then `lint-staged`, which runs `eslint --max-warnings 0`
+on staged `.ts` files.
 
 ## Architecture
 
@@ -23,14 +25,18 @@ All source is in `src/`, TypeScript, ES modules.
 
 - `src/types.ts` — Core interfaces: `JambonzTool`, `ToolSchema`, `SessionLike`. `SessionLike` is a minimal duck-type of the `@jambonz/sdk` WebSocket session (no hard dependency).
 - `src/register.ts` — `registerTools()` dispatcher: listens on a session hook path, maps tool names to handlers, calls `execute()`, sends results back via `session.sendToolOutput()`.
-- `src/tools/*.ts` — Each file exports a factory function (`createXxx(options?) → JambonzTool`). Tools are stateless closures, not classes.
+- `src/tools/*.ts` — Each file exports a factory function (`createXxx(options?) → JambonzTool`), plus a `schema` (`ToolSchema`) and `meta` (`ToolMeta`) for catalog discovery. Tools are stateless closures, not classes.
 - `src/index.ts` — Re-exports everything. All new tools must be added here.
+- `src/catalog.generated.ts` — **Generated, do not edit.** Produced by `scripts/generate-catalog.mjs`, which globs `src/tools/*.ts` and imports each module's `schema`+`meta` into `toolCatalog` / `listTools()`. Regenerated on build and pre-commit, so it never drifts and there is no central list to maintain.
 
 ### Adding a new tool
 
-1. Create `src/tools/your-tool.ts` exporting `createYourTool(options?): JambonzTool`
-2. Return `{ schema, execute }` — schema follows OpenAI function-calling format
-3. Re-export from `src/index.ts`
+1. Create `src/tools/your-tool.ts`:
+   - `export const schema: ToolSchema = { ... }` — OpenAI function-calling format
+   - `export const meta: ToolMeta = { factory: 'createYourTool', requiresApiKey: false }`
+   - `export function createYourTool(options?): JambonzTool` returning `{ schema, execute }`
+2. Re-export the factory (and any options type) from `src/index.ts`
+3. That's it — the catalog regenerates automatically (`npm run build` or commit). No catalog edit needed.
 
 ### Design constraints
 
