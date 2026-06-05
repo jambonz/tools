@@ -1,1 +1,3 @@
+npm run gen:catalog
+git add src/catalog.generated.ts
 npx lint-staged

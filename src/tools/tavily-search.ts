@@ -1,4 +1,4 @@
-import type { JambonzTool, ToolSchema } from '../types.js';
+import type { JambonzTool, ToolMeta, ToolSchema } from '../types.js';
 
 export interface TavilySearchOptions {
   /** Tavily API key (required) */
@@ -15,7 +15,7 @@ export interface TavilySearchOptions {
   excludeDomains?: string[];
 }
 
-const schema: ToolSchema = {
+export const schema: ToolSchema = {
   name: 'web_search',
   description: 'Search the web for current information on a given topic or question.',
   parameters: {
@@ -29,6 +29,8 @@ const schema: ToolSchema = {
     required: ['query'],
   },
 };
+
+export const meta: ToolMeta = { factory: 'createTavilySearch', requiresApiKey: true };
 
 /**
  * Create a web search tool powered by the Tavily Search API.

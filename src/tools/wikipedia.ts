@@ -1,4 +1,4 @@
-import type { JambonzTool, ToolSchema } from '../types.js';
+import type { JambonzTool, ToolMeta, ToolSchema } from '../types.js';
 
 export interface WikipediaOptions {
   /** Maximum number of sentences to return from the article summary (default: 5) */
@@ -7,7 +7,7 @@ export interface WikipediaOptions {
   language?: string;
 }
 
-const schema: ToolSchema = {
+export const schema: ToolSchema = {
   name: 'wikipedia',
   description: 'Look up a topic on Wikipedia to get a factual summary. '
     + 'Useful for answering questions about people, places, history, science, and general knowledge.',
@@ -22,6 +22,8 @@ const schema: ToolSchema = {
     required: ['query'],
   },
 };
+
+export const meta: ToolMeta = { factory: 'createWikipedia', requiresApiKey: false };
 
 /**
  * Create a Wikipedia lookup tool using the free Wikipedia REST API.
