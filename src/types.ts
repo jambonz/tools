@@ -5,6 +5,7 @@ export interface ToolParameters {
   type: 'object';
   properties: Record<string, unknown>;
   required?: string[];
+  [key: string]: unknown;
 }
 
 /**
